@@ -1,0 +1,4 @@
+[package]
+name = "rosalind-cli"
+version = "0.1.0"
+authors = ["antklim <anton.klimenko@adslot.com>"]
