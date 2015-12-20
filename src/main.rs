@@ -7,9 +7,10 @@ use std::io::prelude::*;
 use std::env;
 
 use rosalind::dna::count_dna_nucleotides;
+use rosalind::rna::transcribe_dna_into_rna;
 use getopts::Options;
 
-fn do_work(data_file: &str) {
+fn do_task(data_file: &str, task: &str) {
   let path = Path::new(data_file);
   let file_path = path.display();
 
@@ -24,9 +25,20 @@ fn do_work(data_file: &str) {
     Err(err) => panic!("couldn't read file {}: {}", file_path, err),
   }
 
-  match count_dna_nucleotides(&s) {
-    Ok(dna_nucleotides) => println!("Result: {}", dna_nucleotides),
-    Err(err) => println!("{:?}", err),
+  match task {
+    "dna" => {
+      match count_dna_nucleotides(&s) {
+        Ok(dna_nucleotides) => println!("Result: {}", dna_nucleotides),
+        Err(err) => println!("{:?}", err),
+      }
+    },
+    "rna" => {
+      match transcribe_dna_into_rna(&s) {
+        Ok(rna) => println!("Result: {}", rna),
+        Err(err) => println!("{:?}", err),
+      }
+    },
+    _ => println!("Unknown task: {}", task),
   }
 }
 
@@ -41,6 +53,7 @@ fn main() {
 
   let mut opts = Options::new();
   opts.reqopt("d", "", "set data file name", "NAME");
+  opts.reqopt("t", "", "provide task name", "TASK");
   opts.optflag("h", "help", "print this help menu");
   let matches = match opts.parse(&args[1..]) {
     Ok(m) => m,
@@ -52,6 +65,7 @@ fn main() {
   }
 
   let data_file = matches.opt_str("d").unwrap();
+  let task = matches.opt_str("t").unwrap();
 
-  do_work(&data_file);
+  do_task(&data_file, &task);
 }
