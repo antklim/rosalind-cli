@@ -1,4 +1,8 @@
 [package]
 name = "rosalind-cli"
-version = "0.1.0"
-authors = ["antklim <anton.klimenko@adslot.com>"]
+version = "0.0.1"
+authors = ["Anton Klimenko <antklim@gmail.com>"]
+
+[dependencies]
+getopts = "0.2"
+rosalind = {git = "https://github.com/antklim/rosalind.git", version = "0.0.1"}
