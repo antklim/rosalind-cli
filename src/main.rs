@@ -6,7 +6,7 @@ use std::path::Path;
 use std::io::prelude::*;
 use std::env;
 
-use rosalind::count_dna_nucleotides;
+use rosalind::dna::count_dna_nucleotides;
 use getopts::Options;
 
 fn do_work(data_file: &str) {

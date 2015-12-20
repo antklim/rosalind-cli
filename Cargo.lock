@@ -14,5 +14,5 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 [[package]]
 name = "rosalind"
 version = "0.0.1"
-source = "git+https://github.com/antklim/rosalind.git#8ff353b97ea4b8aca78258342d2b9a2349fc9864"
+source = "git+https://github.com/antklim/rosalind.git#4ad13266cdbd632b55a5b88ba751d5f9ed3563e9"
 
