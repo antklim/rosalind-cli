@@ -5,4 +5,4 @@ authors = ["Anton Klimenko <antklim@gmail.com>"]
 
 [dependencies]
 getopts = "0.2"
-rosalind = {git = "https://github.com/antklim/rosalind.git", version = "0.0.1"}
+rosalind = "0.0.1"
