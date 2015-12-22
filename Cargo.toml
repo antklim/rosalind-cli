@@ -10,4 +10,4 @@ license = "MIT"
 
 [dependencies]
 getopts = "0.2"
-rosalind = "0.0.1"
+rosalind = ">=0.0.1"
