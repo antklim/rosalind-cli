@@ -8,6 +8,7 @@ use std::env;
 
 use rosalind::dna::count_dna_nucleotides;
 use rosalind::rna::transcribe_dna_into_rna;
+use rosalind::revc::reverse_complement_dna;
 use getopts::Options;
 
 fn do_task(data_file: &str, task: &str) {
@@ -38,6 +39,12 @@ fn do_task(data_file: &str, task: &str) {
         Err(err) => println!("{:?}", err),
       }
     },
+    "revc" => {
+      match reverse_complement_dna(&s) {
+        Ok(revc) => println!("Result: {}", revc),
+        Err(err) => println!("{:?}", err),
+      }
+    }
     _ => println!("Unknown task: {}", task),
   }
 }
