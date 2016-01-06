@@ -2,6 +2,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [0.0.4] - 2016-01-06
+### Added
+- `rosalind::fib` module
+
 ## [0.0.3] - 2015-12-23
 ### Added
 - `rosalind::revc` module
