@@ -9,9 +9,10 @@ use std::env;
 use rosalind::dna::count_dna_nucleotides;
 use rosalind::rna::transcribe_dna_into_rna;
 use rosalind::revc::reverse_complement_dna;
-use getopts::Options;
+use rosalind::fib::recurrence_relation;
+use getopts::{Options, Matches};
 
-fn do_task(data_file: &str, task: &str) {
+fn read_data_file(data_file: &str) -> String {
   let path = Path::new(data_file);
   let file_path = path.display();
 
@@ -26,24 +27,50 @@ fn do_task(data_file: &str, task: &str) {
     Err(err) => panic!("couldn't read file {}: {}", file_path, err),
   }
 
+  return s;
+}
+
+fn do_task(matches: &Matches) {
+  if matches.opt_str("t").is_none() {
+    panic!("task name required");
+  }
+
+  let task: &str = &(matches.opt_str("t").unwrap());
   match task {
     "dna" => {
+      if matches.opt_str("d").is_none() { panic!("data file required") }
+      let data_file = matches.opt_str("d").unwrap();
+      let s = read_data_file(&data_file);
       match count_dna_nucleotides(&s) {
         Ok(dna_nucleotides) => println!("Result: {}", dna_nucleotides),
         Err(err) => println!("{:?}", err),
       }
     },
     "rna" => {
+      if matches.opt_str("d").is_none() { panic!("data file required") }
+      let data_file = matches.opt_str("d").unwrap();
+      let s = read_data_file(&data_file);
       match transcribe_dna_into_rna(&s) {
         Ok(rna) => println!("Result: {}", rna),
         Err(err) => println!("{:?}", err),
       }
     },
     "revc" => {
+      if matches.opt_str("d").is_none() { panic!("data file required") }
+      let data_file = matches.opt_str("d").unwrap();
+      let s = read_data_file(&data_file);
       match reverse_complement_dna(&s) {
         Ok(revc) => println!("Result: {}", revc),
         Err(err) => println!("{:?}", err),
       }
+    },
+    "fib" => {
+      if matches.opt_str("n").is_none() { panic!("N parameter required") }
+      if matches.opt_str("k").is_none() { panic!("K parameter required") }
+      let n: u8 = matches.opt_str("n").unwrap().parse::<u8>().unwrap();
+      let k: u8 = matches.opt_str("k").unwrap().parse::<u8>().unwrap();
+      let fib = recurrence_relation(n, k);
+      println!("Result: {}", fib);
     }
     _ => println!("Unknown task: {}", task),
   }
@@ -59,9 +86,11 @@ fn main() {
   let program = args[0].clone();
 
   let mut opts = Options::new();
-  opts.reqopt("d", "", "set data file name", "NAME");
-  opts.reqopt("t", "", "provide task name", "TASK");
+  opts.optopt("d", "data", "set data file name", "NAME");
   opts.optflag("h", "help", "print this help menu");
+  opts.optopt("k", "", "k value for fibonacci", "K");
+  opts.optopt("n", "", "n value for fibonacci", "N");
+  opts.optopt("t", "task", "provide task name", "dna|rna|revc|fib");
   let matches = match opts.parse(&args[1..]) {
     Ok(m) => m,
     Err(f) => panic!(f.to_string()),
@@ -71,8 +100,5 @@ fn main() {
     return print_usage(&program, opts);
   }
 
-  let data_file = matches.opt_str("d").unwrap();
-  let task = matches.opt_str("t").unwrap();
-
-  do_task(&data_file, &task);
+  do_task(&matches);
 }
