@@ -11,6 +11,7 @@ use rosalind::rna::transcribe_dna_into_rna;
 use rosalind::revc::reverse_complement_dna;
 use rosalind::fib::recurrence_relation;
 use rosalind::prot::translate_rna_into_protein;
+use rosalind::hamm::hamming_distance;
 use getopts::{Options, Matches};
 
 fn read_data_file(data_file: &str) -> String {
@@ -81,7 +82,19 @@ fn do_task(matches: &Matches) {
         Ok(prot) => println!("Result: {}", prot),
         Err(err) => println!("{:?}", err),
       }
-    }
+    },
+    "hamm" => {
+      if matches.opt_str("d").is_none() { panic!("data file required") }
+      let data_file = matches.opt_str("d").unwrap();
+      let df = read_data_file(&data_file);
+      let mut lines = df.lines();
+      let s = lines.next().unwrap();
+      let t = lines.next().unwrap();
+      match hamming_distance(&s, &t) {
+        Ok(hamm) => println!("Result: {}", hamm),
+        Err(err) => println!("{:?}", err),
+      }
+    },
     _ => println!("Unknown task: {}", task),
   }
 }
@@ -100,7 +113,7 @@ fn main() {
   opts.optflag("h", "help", "print this help menu");
   opts.optopt("k", "", "k value for fibonacci", "K");
   opts.optopt("n", "", "n value for fibonacci", "N");
-  opts.optopt("t", "task", "provide task name", "dna|rna|revc|fib|prot");
+  opts.optopt("t", "task", "provide task name", "dna|rna|revc|fib|prot|hamm");
   let matches = match opts.parse(&args[1..]) {
     Ok(m) => m,
     Err(f) => panic!(f.to_string()),
