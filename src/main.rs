@@ -71,8 +71,10 @@ fn do_task(matches: &Matches) {
       if matches.opt_str("k").is_none() { panic!("K parameter required") }
       let n: u8 = matches.opt_str("n").unwrap().parse::<u8>().unwrap();
       let k: u8 = matches.opt_str("k").unwrap().parse::<u8>().unwrap();
-      let fib = recurrence_relation(n, k);
-      println!("Result: {}", fib);
+      match recurrence_relation(n, k) {
+        Ok(fib) => println!("Result: {}", fib),
+        Err(err) => println!("{:?}", err),
+      }
     },
     "prot" => {
       if matches.opt_str("d").is_none() { panic!("data file required") }
