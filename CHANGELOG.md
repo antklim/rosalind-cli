@@ -2,6 +2,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [0.0.8] - 2016-02-09
+### Added
+- `rosalind::subs` module
+
 ## [0.0.7] - 2016-02-05
 ### Changed
 - `rosalind::fib` return type now `Result`, all modules now return `Result`
