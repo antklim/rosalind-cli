@@ -35,36 +35,34 @@ fn read_data_file(data_file: &str) -> String {
 }
 
 fn do_task(matches: &Matches) {
-  if matches.opt_str("t").is_none() {
-    panic!("task name required");
-  }
+  if matches.opt_str("t").is_none() { panic!("task name required"); }
 
   let task: &str = &(matches.opt_str("t").unwrap());
+  let data_file: String;
+  let mut file_content = String::new();
+
+  if task != "fib" {
+    if matches.opt_str("d").is_none() { panic!("data file required") }
+    data_file = matches.opt_str("d").unwrap();
+    file_content = read_data_file(&data_file);
+  }
+
   match task {
     "dna" => {
-      if matches.opt_str("d").is_none() { panic!("data file required") }
-      let data_file = matches.opt_str("d").unwrap();
-      let s = read_data_file(&data_file);
-      match count_dna_nucleotides(&s) {
-        Ok(dna_nucleotides) => println!("Result: {}", dna_nucleotides),
+      match count_dna_nucleotides(&file_content) {
+        Ok(result) => println!("Result: {}", result),
         Err(err) => println!("{:?}", err),
       }
     },
     "rna" => {
-      if matches.opt_str("d").is_none() { panic!("data file required") }
-      let data_file = matches.opt_str("d").unwrap();
-      let s = read_data_file(&data_file);
-      match transcribe_dna_into_rna(&s) {
-        Ok(rna) => println!("Result: {}", rna),
+      match transcribe_dna_into_rna(&file_content) {
+        Ok(result) => println!("Result: {}", result),
         Err(err) => println!("{:?}", err),
       }
     },
     "revc" => {
-      if matches.opt_str("d").is_none() { panic!("data file required") }
-      let data_file = matches.opt_str("d").unwrap();
-      let s = read_data_file(&data_file);
-      match reverse_complement_dna(&s) {
-        Ok(revc) => println!("Result: {}", revc),
+      match reverse_complement_dna(&file_content) {
+        Ok(result) => println!("Result: {}", result),
         Err(err) => println!("{:?}", err),
       }
     },
@@ -74,49 +72,37 @@ fn do_task(matches: &Matches) {
       let n: u8 = matches.opt_str("n").unwrap().parse::<u8>().unwrap();
       let k: u8 = matches.opt_str("k").unwrap().parse::<u8>().unwrap();
       match recurrence_relation(n, k) {
-        Ok(fib) => println!("Result: {}", fib),
+        Ok(result) => println!("Result: {}", result),
         Err(err) => println!("{:?}", err),
       }
     },
     "prot" => {
-      if matches.opt_str("d").is_none() { panic!("data file required") }
-      let data_file = matches.opt_str("d").unwrap();
-      let s = read_data_file(&data_file);
-      match translate_rna_into_protein(&s) {
-        Ok(prot) => println!("Result: {}", prot),
+      match translate_rna_into_protein(&file_content) {
+        Ok(result) => println!("Result: {}", result),
         Err(err) => println!("{:?}", err),
       }
     },
     "hamm" => {
-      if matches.opt_str("d").is_none() { panic!("data file required") }
-      let data_file = matches.opt_str("d").unwrap();
-      let df = read_data_file(&data_file);
-      let mut lines = df.lines();
+      let mut lines = file_content.lines();
       let s = lines.next().unwrap();
       let t = lines.next().unwrap();
       match hamming_distance(&s, &t) {
-        Ok(hamm) => println!("Result: {}", hamm),
+        Ok(result) => println!("Result: {}", result),
         Err(err) => println!("{:?}", err),
       }
     },
     "subs" => {
-      if matches.opt_str("d").is_none() { panic!("data file required") }
-      let data_file = matches.opt_str("d").unwrap();
-      let df = read_data_file(&data_file);
-      let mut lines = df.lines();
+      let mut lines = file_content.lines();
       let s = lines.next().unwrap();
       let t = lines.next().unwrap().trim();
       match motif_lookup(&s, &t) {
-        Ok(motif) => println!("Result: {:?}", motif),
+        Ok(result) => println!("Result: {:?}", result),
         Err(err) => println!("{:?}", err),
       }
     },
     "gc" => {
-      if matches.opt_str("d").is_none() { panic!("data file required") }
-      let data_file = matches.opt_str("d").unwrap();
-      let s = read_data_file(&data_file);
-      match best_gc_content_in_dataset(&s) {
-        Ok(gc_content) => println!("Result: {}", gc_content),
+      match best_gc_content_in_dataset(&file_content) {
+        Ok(result) => println!("Result: {}", result),
         Err(err) => println!("{:?}", err),
       }
     },
