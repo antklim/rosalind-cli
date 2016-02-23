@@ -1,6 +1,6 @@
 [root]
 name = "rosalind-cli"
-version = "0.0.8"
+version = "0.0.9"
 dependencies = [
  "getopts 0.2.14 (registry+https://github.com/rust-lang/crates.io-index)",
  "rosalind 0.6.0 (registry+https://github.com/rust-lang/crates.io-index)",
