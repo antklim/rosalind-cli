@@ -2,6 +2,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [0.0.10] - 2016-03-04
+### Changed
+- Updated rosalind library methods call interface
+
 ## [0.0.9] - 2016-02-23
 ### Added
 - `rosalind::gc` module
