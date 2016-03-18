@@ -9,7 +9,7 @@ use std::env;
 use rosalind::dna::count_dna_nucleotides;
 use rosalind::rna::transcribe_dna_into_rna;
 use rosalind::revc::reverse_complement_dna;
-use rosalind::fib::recurrence_relation;
+use rosalind::fib::{recurrence_relation, recurrence_relation_with_stop};
 use rosalind::prot::translate_rna_into_protein;
 use rosalind::hamm::hamming_distance;
 use rosalind::subs::motif_lookup;
@@ -41,10 +41,13 @@ fn do_task(matches: &Matches) {
   let data_file: String;
   let mut file_content = String::new();
 
-  if task != "fib" {
-    if matches.opt_str("d").is_none() { panic!("data file required") }
-    data_file = matches.opt_str("d").unwrap();
-    file_content = read_data_file(&data_file);
+  match task {
+    "fib" | "fibd" => (),
+    _ => {
+      if matches.opt_str("d").is_none() { panic!("data file required") }
+      data_file = matches.opt_str("d").unwrap();
+      file_content = read_data_file(&data_file);
+    }
   }
 
   match task {
@@ -67,11 +70,21 @@ fn do_task(matches: &Matches) {
       }
     },
     "fib" => {
-      if matches.opt_str("n").is_none() { panic!("N parameter required") }
-      if matches.opt_str("k").is_none() { panic!("K parameter required") }
-      let n: u8 = matches.opt_str("n").unwrap().parse::<u8>().unwrap();
-      let k: u8 = matches.opt_str("k").unwrap().parse::<u8>().unwrap();
+      if matches.opt_str("n").is_none() { panic!("month amount to calculate population required (n)") }
+      if matches.opt_str("k").is_none() { panic!("offspring amount from each pair required (k)") }
+      let n: usize = matches.opt_str("n").unwrap().parse::<usize>().unwrap();
+      let k: usize = matches.opt_str("k").unwrap().parse::<usize>().unwrap();
       match recurrence_relation(n, k) {
+        Ok(result) => println!("Result: {}", result),
+        Err(err) => println!("{:?}", err),
+      }
+    },
+    "fibd" => {
+      if matches.opt_str("n").is_none() { panic!("month amount to calculate population required (n)") }
+      if matches.opt_str("m").is_none() { panic!("lifetime in months required (m)") }
+      let n: usize = matches.opt_str("n").unwrap().parse::<usize>().unwrap();
+      let m: usize = matches.opt_str("m").unwrap().parse::<usize>().unwrap();
+      match recurrence_relation_with_stop(n, m) {
         Ok(result) => println!("Result: {}", result),
         Err(err) => println!("{:?}", err),
       }
@@ -120,11 +133,13 @@ fn main() {
   let program = args[0].clone();
 
   let mut opts = Options::new();
+  let supported_tasks = "dna|rna|revc|fib|fibd|prot|hamm|subs|gc";
   opts.optopt("d", "data", "set data file name", "NAME");
   opts.optflag("h", "help", "print this help menu");
-  opts.optopt("k", "", "k value for fibonacci", "K");
-  opts.optopt("n", "", "n value for fibonacci", "N");
-  opts.optopt("t", "task", "provide task name", "dna|rna|revc|fib|prot|hamm|subs|gc");
+  opts.optopt("k", "", "offspring amount from each pair", "K");
+  opts.optopt("m", "", "lifetime in months", "M");
+  opts.optopt("n", "", "month amount to calculate population", "N");
+  opts.optopt("t", "task", "task name", supported_tasks);
   let matches = match opts.parse(&args[1..]) {
     Ok(m) => m,
     Err(f) => panic!(f.to_string()),
