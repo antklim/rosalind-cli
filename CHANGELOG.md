@@ -2,6 +2,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [0.0.12] - 2016-04-12
+### Added
+- `rosalind::prot::get_number_of_rna_from_protein` added for `Inferring mRNA from Protein`
+
 ## [0.0.11] - 2016-03-18
 ### Added
 - `rosalind::fib::recurrence_relation_with_stop` added for `Mortal Fibonacci Rabbits`

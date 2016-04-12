@@ -10,7 +10,7 @@ use rosalind::dna::count_dna_nucleotides;
 use rosalind::rna::transcribe_dna_into_rna;
 use rosalind::revc::reverse_complement_dna;
 use rosalind::fib::{recurrence_relation, recurrence_relation_with_stop};
-use rosalind::prot::translate_rna_into_protein;
+use rosalind::prot::{translate_rna_into_protein, get_number_of_rna_from_protein};
 use rosalind::hamm::hamming_distance;
 use rosalind::subs::motif_lookup;
 use rosalind::gc::best_gc_content_in_dataset;
@@ -95,6 +95,12 @@ fn do_task(matches: &Matches) {
         Err(err) => println!("{:?}", err),
       }
     },
+    "mrna" => {
+      match get_number_of_rna_from_protein(&file_content) {
+        Ok(result) => println!("Result: {}", result),
+        Err(err) => println!("{:?}", err),
+      }
+    },
     "hamm" => {
       let mut lines = file_content.lines();
       let s = lines.next().unwrap();
@@ -133,7 +139,7 @@ fn main() {
   let program = args[0].clone();
 
   let mut opts = Options::new();
-  let supported_tasks = "dna|rna|revc|fib|fibd|prot|hamm|subs|gc";
+  let supported_tasks = "dna|rna|revc|fib|fibd|prot|hamm|subs|gc|mrna";
   opts.optopt("d", "data", "set data file name", "NAME");
   opts.optflag("h", "help", "print this help menu");
   opts.optopt("k", "", "offspring amount from each pair", "K");
