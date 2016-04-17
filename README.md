@@ -2,4 +2,4 @@
 
 CLI for [rosalind library](https://github.com/antklim/rosalind)
 
-[API documentation](http://antklim.github.io/docs/rosalind-cli/rosalind-cli/index.html)
+[API documentation](http://antklim.github.io/docs/rosalind-cli/rosalind_cli/index.html)
