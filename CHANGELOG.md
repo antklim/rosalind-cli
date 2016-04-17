@@ -2,6 +2,12 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [0.0.13] - 2016-04-17
+### Added
+- Documentation added
+### Changed
+- `do_task` method re-factored
+
 ## [0.0.12] - 2016-04-12
 ### Added
 - `rosalind::prot::get_number_of_rna_from_protein` added for `Inferring mRNA from Protein`
