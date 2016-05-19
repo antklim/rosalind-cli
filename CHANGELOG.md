@@ -2,6 +2,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [0.0.14] - 2016-05-19
+### Added
+- `rosalind::prot::get_protein_mass` added for `Calculating Protein Mass`
+
 ## [0.0.13] - 2016-04-17
 ### Added
 - Documentation added

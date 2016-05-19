@@ -73,6 +73,11 @@
 //! rosalind-cli -t mrna -d rosalind_mrna.txt
 //! ```
 //!
+//! ### Calculating Protein Mass, task name `prtm`
+//! ```
+//! rosalind-cli -t prtm -d rosalind_prtm.txt
+//! ```
+//!
 
 extern crate getopts;
 extern crate rosalind;
@@ -85,8 +90,8 @@ use std::env;
 use rosalind::dna::count_dna_nucleotides;
 use rosalind::rna::transcribe_dna_into_rna;
 use rosalind::revc::reverse_complement_dna;
-use rosalind::fib::{recurrence_relation, recurrence_relation_with_stop};
-use rosalind::prot::{translate_rna_into_protein, get_number_of_rna_from_protein};
+use rosalind::fib::*;
+use rosalind::prot::*;
 use rosalind::hamm::hamming_distance;
 use rosalind::subs::motif_lookup;
 use rosalind::gc::best_gc_content_in_dataset;
@@ -184,6 +189,12 @@ fn do_task(task: &str, file_content: &str, n: usize, m: usize, k: usize) {
     },
     "mrna" => {
       match get_number_of_rna_from_protein(file_content) {
+        Ok(result) => println!("Result: {}", result),
+        Err(err) => println!("{:?}", err),
+      }
+    },
+    "prtm" => {
+      match get_protein_mass(file_content) {
         Ok(result) => println!("Result: {}", result),
         Err(err) => println!("{:?}", err),
       }
@@ -305,6 +316,10 @@ mod tests {
   // #[test]
   // fn do_task_should_call_iprb() {
   // }
+
+  // #[test]
+  // fn do_task_should_call_prtm() {
+  // }
 }
 
 fn main() {
@@ -312,7 +327,7 @@ fn main() {
   let program = args[0].clone();
 
   let mut opts = Options::new();
-  let supported_tasks = "dna|rna|revc|fib|fibd|prot|hamm|subs|gc|mrna|iprb";
+  let supported_tasks = "dna|rna|revc|fib|fibd|prot|hamm|subs|gc|mrna|iprb|prtm";
 
   opts.optopt("d", "data", "set data file name", "NAME");
   opts.optflag("h", "help", "print this help menu");
