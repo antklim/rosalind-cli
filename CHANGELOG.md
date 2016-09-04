@@ -2,6 +2,12 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [0.0.15] - 2016-09-04
+### Added
+- `rosalind::cons::{consensus, profile}` added for `Consensus and Profile`
+### Changed
+- code style follows Rust code conventions
+
 ## [0.0.14] - 2016-05-19
 ### Added
 - `rosalind::prot::get_protein_mass` added for `Calculating Protein Mass`
