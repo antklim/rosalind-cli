@@ -1,6 +1,6 @@
 [package]
 name = "rosalind-cli"
-version = "0.0.14"
+version = "0.0.15"
 authors = ["Anton Klimenko <antklim@gmail.com>"]
 description = "CLI for `rosalind` crate"
 repository = "https://github.com/antklim/rosalind-cli.git"
